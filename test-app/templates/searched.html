@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie Recommender</title>
+
+    </head>
+    <body>
+        <h1>Welcome to the In-Memory Movie Recommender</h1>
+        <form action=/recommendations method="POST">
+        <label for="userId">Enter User ID Here</label>
+        <input type="text" name="userId" id="userId" placeholder="Enter here... "><br>
+        <table>
+            <thead>
+                <tr>
+                  <th>Movie ID</th>
+                  <th>Title</th>
+                  <th>Year of Release</th>
+                  <th>Choose?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tup in keys %}
+                    <tr>
+                        <td> {{ tup[0] }} </td>
+                        <td> {{ tup[1] }} </td>
+                        <td> {{ tup[2] }} </td>
+                        <td> <input type="radio" name="choice" id= '{{ tup[0] }}' value= '{{ tup[0] }}'><br><br> </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="submit", id="submit">
+        </form>
+    </body>
+</html>
