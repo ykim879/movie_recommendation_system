@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie Recommender</title>
+
+    </head>
+    <body>
+        <h1>New Rating Added or Updated:</h1>
+        <table>
+            <thead>
+                <tr>
+                <th>User ID</th>
+                <th>Movie ID</th>
+                <th>New Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td> {{ keys["userId"] }} </td>
+                        <td> {{ keys["movieId"] }} </td>
+                        <td> {{ keys["rating"] }} </td>
+                    </tr>
+            </tbody>
+        </table>
+        <form action="http://127.0.0.1:5000/">
+            <button type="submit">Back to Beginning</button>
+        </form>
+    </body>
+</html>

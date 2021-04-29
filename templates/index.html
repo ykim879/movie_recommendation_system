@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie Recommender</title>
+    </head>
+    <body>
+        <h1>Welcome to the In-Memory Movie Recommender</h1>
+        <div class="topnav">
+            <form action = /search method="POST">
+                <input type='text' name="userId" id="userId" placeholder="Enter User ID..." size="15">
+                <input type="text" name="movie" id="movie" placeholder="Search... " size="15">
+                <input type="submit" name="submit" id="submit"/>
+            </form>
+            <form action='/batch' method="POST">
+                <input type="submit" value="Process Batch" id="submit">
+            </form>
+            <form action='/find_recommendations' method="POST">
+                <input type='text' name="recUserId" id="recUserId" placeholder="Enter User ID..." size="15">
+                <input type="submit" value="Find Recommendations" id="findrecs">
+            </form>
+        </div>
+    </body>
+</html>

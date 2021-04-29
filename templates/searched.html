@@ -6,9 +6,7 @@
     </head>
     <body>
         <h1>Welcome to the In-Memory Movie Recommender</h1>
-        <form action=/recommendations method="POST">
-        <label for="userId">Enter User ID Here</label>
-        <input type="text" name="userId" id="userId" placeholder="Enter here... "><br>
+        <form action="/recommendations" method="POST">
         <table>
             <thead>
                 <tr>
@@ -29,7 +27,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        <input type="submit" value="submit", id="submit">
+        <input type="submit" value="Submit", id="submit">
         </form>
+        <form action="http://127.0.0.1:5000/">
+            <button type="submit">Back</button>
+         </form>
     </body>
 </html>

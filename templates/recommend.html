@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie Recommender</title>
+
+    </head>
+    <body>
+        <h1>Ratings for the Movie:</h1>
+        {% if keys["rating"] == 'Not Yet Rated' %}
+        <h1>No rating for User ID: {{ keys["userId"] }} and Movie ID: {{ keys["movieId"] }}. Please add one:</h1>
+        <form action='/add_rating' method="POST">
+            <input type="number" name='newRating' id="newRating" step="0.1" min="0.0" max="5.0"></input>
+            <input type="submit" value="Submit" id="submit">
+        </form>
+
+        {% else %}
+        <form action="/update_rating" method="POST">
+            <table>
+                <thead>
+                    <tr>
+                    <th>User ID</th>
+                    <th>Movie ID</th>
+                    <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td> {{ keys["userId"] }} </td>
+                            <td> {{ keys["movieId"] }} </td>
+                            <td> {{ keys["rating"] }} </td>
+                        </tr>
+                </tbody>
+            </table>
+            <h1>Update rating for User ID: {{ keys["userId"] }} and Movie ID: {{ keys["movieId"] }}?</h1>
+            <input type="number" name='newRating' id="newRating" step="0.1" min="0.0" max="5.0"></input>
+            <input type="submit" value="Submit" id="submit">
+        </form>
+        {% endif %}
+        <form action="http://127.0.0.1:5000/">
+            <button type="submit">Back to Beginning</button>
+        </form>
+    </body>
+</html>
