@@ -44,11 +44,12 @@ def search_values():
     for key in keys:
         newStr = key.decode('utf-8')
         movieId = r.hgetall(newStr)[b'movieId'].decode("utf-8")
+        genres = r.hgetall(newStr)[b'genres'].decode("utf-8")
         val = str(key.decode('utf-8')[6:])
         #print(val)
         title = val[:-7]
         date = val[-5:-1]
-        a.append((movieId, title, date))
+        a.append((movieId, title, date, genres))
         
     return render_template("searched.html", keys=a)
 
@@ -75,7 +76,7 @@ def add_rating():
     newRating = {}
     newRating["movieId"] = movieId
     newRating["userId"] = userId
-    newRating["rating"] = request.form["newRating"]
+    newRating["rating"] = round(float(request.form["newRating"]), 1)
     r.hset(key, key='movieId', value=newRating['movieId'])
     r.hset(key, key='userId', value=newRating['userId'])
     r.hset(key, key='rating', value=newRating['rating'])
@@ -100,7 +101,7 @@ def update_rating():
     r.hset(chkKey, key='rating', value=request.form['newRating'])
     global ratingdf
     global ratColumns
-    newRow = spark.createDataFrame([(chkKey[7:], int(userId), int(movieId), float(request.form['newRating']))], ratColumns)
+    newRow = spark.createDataFrame([(chkKey[7:], int(userId), int(movieId), round(float(request.form["newRating"]), 1))], ratColumns)
     global newColumns
     newColumns = newColumns.union(newRow)
     printBatch()
@@ -126,6 +127,7 @@ def processBatch():
     fixedDf = full_outer_join.filter('count == 1').unionAll(full_outer_join.filter((full_outer_join['count'] > 1) & (full_outer_join['_row_number'] > 1)))
     ratingdf = fixedDf.select(col('key'), col('userId'), col('movieId'), col('rating'))
     recEng = RecommendationEngine(sc, moviedf, ratingdf)
+    newColumns = spark.createDataFrame([], ratingdf.schema)
     return render_template("batch.html")
 
 @app.route('/find_recommendations', methods=['POST'])
@@ -139,11 +141,46 @@ def find_recommendations():
     print(keys)
     for key in keys:
         movieId = str(r.hgetall('movie:' + key)[b'movieId'].decode("utf-8"))
+        genres = str(r.hgetall('movie:' + key)[b'genres'].decode("utf-8"))
         title = key[:-7]
         date = key[-5:-1]
-        a.append((movieId, title, date))
+        a.append((movieId, title, date, genres))
 
     return render_template("recs.html", keys=a)
+
+@app.route('/user_history', methods=['POST'])
+def user_history():
+    vals = r.keys("rating:User ID: " + str(request.form['recUserId']) + ", *")
+    movies = []
+    ratingVals = []
+    for st in vals:
+        numbers = [int(word) for word in st.split() if word.isdigit()]
+        ratingVal = str(r.hgetall(st)[b'rating'].decode("utf-8"))
+        movies.append(numbers[0])
+        ratingVals.append(ratingVal)
+
+    movieNames = moviedf.filter(moviedf.movieId.isin(movies)).select(col('title'))
+    movieNames = [row['title'] for row in movieNames.collect()]
+    history = []
+    a = []
+    a.append(str(request.form['recUserId']))
+    for i in range(len(movieNames)):
+        key = movieNames[i]
+        title = key[:-7]
+        date = key[-5:-1]
+        genres = str(r.hgetall('movie:' + key)[b'genres'].decode("utf-8"))
+        history.append((movies[i], title, date, genres, ratingVals[i]))
+    #Bubble sort for higest ratings
+    
+    for i in range(len(movies)): 
+        for j in range(len(movies)-i-1): 
+            if (float(history[j][4]) < float(history[j + 1][4])): 
+                temp = history[j] 
+                history[j]= history[j + 1] 
+                history[j + 1]= temp 
+    
+    a.append(history)
+    return render_template("user_history.html", keys=a)
 
 def init_spark_context():
     MAX_MEMORY = "5g"
@@ -162,13 +199,16 @@ if __name__ == '__main__':
     #global sc
     sc = init_spark_context()
     spark = SparkSession.builder.config(conf = sc.getConf()).getOrCreate()
-    #print(sc.getConf().getAll())
     #print(read_moviedf.show())
     read_moviedf = spark.read.format("org.apache.spark.sql.redis").option("table", "movie").option("key.column", "title").load()
     #global moviedf
     moviedf = read_moviedf.sort("title")
     datasets_path = os.path.join('..','movie_recommendation_system', 'datasets')
     complete_ratings_file = os.path.join(datasets_path, 'ml-latest', 'ratings.csv')
+    movies_file = os.path.join(datasets_path, 'ml-latest', 'movies.csv')
+
+    movie = spark.read.option("inferSchema", "true").option("header", "true").csv(movies_file)
+    
     ratingschema = StructType()\
         .add("userId", IntegerType(), True)\
         .add("movieId", IntegerType(), True)\

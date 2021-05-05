@@ -6,18 +6,26 @@
     <body>
         <h1>Welcome to the In-Memory Movie Recommender</h1>
         <div class="topnav">
+            <p>Please enter a User ID and Search Term Below:</p>
             <form action = /search method="POST">
                 <input type='text' name="userId" id="userId" placeholder="Enter User ID..." size="15">
                 <input type="text" name="movie" id="movie" placeholder="Search... " size="15">
                 <input type="submit" name="submit" id="submit"/>
             </form>
+            <p>Click Here to Process a Batch of Ratings</p>
             <form action='/batch' method="POST">
                 <input type="submit" value="Process Batch" id="submit">
             </form>
+            <p>Enter a User ID to Find Recommendations for that User:</p>
             <form action='/find_recommendations' method="POST">
                 <input type='text' name="recUserId" id="recUserId" placeholder="Enter User ID..." size="15">
                 <input type="submit" value="Find Recommendations" id="findrecs">
             </form>
+            <p>Enter a User ID to Find a History of that User's Ratings:</p>
+            <form action='/user_history' method="POST">
+                <input type='text' name="recUserId" id="recUserId" placeholder="Enter User ID..." size="15">
+                <input type="submit" value="Find User History" id="findrecs">
+            </form>            
         </div>
     </body>
 </html>

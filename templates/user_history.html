@@ -5,8 +5,8 @@
 
     </head>
     <body>
-        <h1>Welcome to the In-Memory Movie Recommender</h1>
-        <form action="/recommendations" method="POST">
+        {% if keys|length == 2 %}
+        <h1>User History from {{ keys[0] }}:</h1>
         <table>
             <thead>
                 <tr>
@@ -14,23 +14,22 @@
                   <th>Title</th>
                   <th>Year of Release</th>
                   <th>Genres</th>
-                  <th>Choose?</th>
+                  <th>Rating</th>
                 </tr>
             </thead>
             <tbody>
-                {% for tup in keys %}
+                {% for tup in keys[1] %}
                     <tr>
                         <td> {{ tup[0] }} </td>
                         <td> {{ tup[1] }} </td>
                         <td> {{ tup[2] }} </td>
                         <td> {{ tup[3] }} </td>
-                        <td> <input type="radio" name="choice" id= '{{ tup[0] }}' value= '{{ tup[0] }}'><br><br> </td>
+                        <td> {{ tup[4] }} </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <input type="submit" value="Submit", id="submit">
-        </form>
+        {% endif %}
         <form action="http://127.0.0.1:5000/">
             <button type="submit">Back</button>
          </form>
