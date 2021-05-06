@@ -120,6 +120,14 @@ def processBatch():
     global moviedf
     global recEng
     global sc
+    movieIds = list(newColumns.select(col('movieId')).toPandas()['movieId'])
+    movieNames = list(moviedf.filter(moviedf.movieId.isin(movieIds)).toPandas()['title'])
+    print(movieIds)
+    print(movieNames)
+    userIds = list(newColumns.select(col('userId')).toPandas()['userId'])
+    a = []
+    for i in range(len(userIds)):
+        a.append((userIds[i], movieIds[i], movieNames[i]))
     mergedDf = ratingdf.unionAll(newColumns)
     mergedDf = mergedDf.withColumn("_row_number", row_number().over(Window.partitionBy(mergedDf['key']).orderBy('key')))
     counts = mergedDf.groupBy('key').count().selectExpr('key as newKey', 'count as count')
@@ -128,7 +136,7 @@ def processBatch():
     ratingdf = fixedDf.select(col('key'), col('userId'), col('movieId'), col('rating'))
     recEng = RecommendationEngine(sc, moviedf, ratingdf)
     newColumns = spark.createDataFrame([], ratingdf.schema)
-    return render_template("batch.html")
+    return render_template("batch.html", keys=a)
 
 @app.route('/find_recommendations', methods=['POST'])
 def find_recommendations():

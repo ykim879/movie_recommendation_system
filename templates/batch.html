@@ -5,6 +5,25 @@
     </head>
     <body>
         <h1>Batch Has Been Processed!</h1>
+        <p>Batch below is shown: </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Movie ID</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tup in keys %}
+                <tr>
+                    <td> {{ tup[0] }} </td>
+                    <td> {{ tup[1] }} </td>
+                    <td> {{ tup[2] }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <form action="http://127.0.0.1:5000/">
             <button type="submit">Back to Beginning</button>
         </form>
