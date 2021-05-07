@@ -120,14 +120,17 @@ def processBatch():
     global moviedf
     global recEng
     global sc
+    '''
     movieIds = list(newColumns.select(col('movieId')).toPandas()['movieId'])
     movieNames = list(moviedf.filter(moviedf.movieId.isin(movieIds)).toPandas()['title'])
     print(movieIds)
     print(movieNames)
     userIds = list(newColumns.select(col('userId')).toPandas()['userId'])
+    print(userIds)
     a = []
     for i in range(len(userIds)):
         a.append((userIds[i], movieIds[i], movieNames[i]))
+    '''
     mergedDf = ratingdf.unionAll(newColumns)
     mergedDf = mergedDf.withColumn("_row_number", row_number().over(Window.partitionBy(mergedDf['key']).orderBy('key')))
     counts = mergedDf.groupBy('key').count().selectExpr('key as newKey', 'count as count')
@@ -136,7 +139,7 @@ def processBatch():
     ratingdf = fixedDf.select(col('key'), col('userId'), col('movieId'), col('rating'))
     recEng = RecommendationEngine(sc, moviedf, ratingdf)
     newColumns = spark.createDataFrame([], ratingdf.schema)
-    return render_template("batch.html", keys=a)
+    return render_template("batch.html")
 
 @app.route('/find_recommendations', methods=['POST'])
 def find_recommendations():
@@ -178,14 +181,6 @@ def user_history():
         date = key[-5:-1]
         genres = str(r.hgetall('movie:' + key)[b'genres'].decode("utf-8"))
         history.append((movies[i], title, date, genres, ratingVals[i]))
-    #Bubble sort for higest ratings
-    
-    for i in range(len(movies)): 
-        for j in range(len(movies)-i-1): 
-            if (float(history[j][4]) < float(history[j + 1][4])): 
-                temp = history[j] 
-                history[j]= history[j + 1] 
-                history[j + 1]= temp 
     
     a.append(history)
     return render_template("user_history.html", keys=a)
