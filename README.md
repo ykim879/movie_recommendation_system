@@ -52,9 +52,9 @@ The GUI should be pretty straightforward. For the a prompt of User ID, only inpu
 <h1>Code Documentation and References</h1>
 
 <h2>Github Pages Referenced</h2>
-https://spark.apache.org/docs/2.2.0/ml-collaborative-filtering.html (For initial model - Changed parameters and how to input data)
-https://github.com/jadianes/spark-movie-lens/blob/master/engine.py (For Initial Structure of engine.py - Changed all functions but kept structure)
-https://github.com/databricks/spark-training/blob/master/website/movie-recommendation-with-mllib.md (For troubleshooting - Added Comparison to Baseline model)
-https://github.com/snehalnair/als-recommender-pyspark (For adding parameter tuning functionality - Unused due to OutOfMemoryError)
+https://spark.apache.org/docs/2.2.0/ml-collaborative-filtering.html (For initial model - Changed parameters and how to input data) <br /> 
+https://github.com/jadianes/spark-movie-lens/blob/master/engine.py (For Initial Structure of engine.py - Changed all functions but kept structure) <br /> 
+https://github.com/databricks/spark-training/blob/master/website/movie-recommendation-with-mllib.md (For troubleshooting - Added Comparison to Baseline model) <br /> 
+https://github.com/snehalnair/als-recommender-pyspark (For adding parameter tuning functionality - Unused due to OutOfMemoryError) <br />
 
 
