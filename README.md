@@ -1,5 +1,7 @@
 <h1>Movie Recommendation System</h1>
 
+<h2>A Unix/Linux Environment is necessary</h2>
+
 <h1>Data Preparation and Setup</h1>
 
 <h2>Create Conda Environment</h2>
