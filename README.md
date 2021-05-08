@@ -32,7 +32,7 @@ Find 'Redis-5.0.12' and run through installation process to setup the `redis-ser
 Download: https://maven.apache.org/install.html
 
 <h2>Install Spark-Redis</h2>
-Clone the repository: https://github.com/RedisLabs/spark-redis/tree/branch-2.4 <br />
+Clone the repository: https://github.com/RedisLabs/spark-redis/tree/branch-2.4 into the `movie_recommendation_system` folder<br />
 
 Enter the folder: `cd spark-redis` and run: `mvn clean package -DskipTests` <br />
 
