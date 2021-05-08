@@ -36,7 +36,7 @@ Clone the repository: https://github.com/RedisLabs/spark-redis/tree/branch-2.4 <
 
 Enter the folder: `cd spark-redis` and run: `mvn clean package -DskipTests` <br />
 
-Copy the generated `spark-redis-<version>-jar-with-dependencies.jar` and place it inside the `jars` subfolder of the Conda `pyspark` installation <br />
+Copy the generated `spark-redis-<version>-jar-with-dependencies.jar` from the generated `targets` folder and place it inside the `jars` subfolder of the Conda `pyspark` installation <br />
 
 If you are having trouble finding the `pyspark` installation open a python shell inside the `movie` conda environment by calling `python`, running `import pyspark`, and running `pyspark`. It is likely your filepath will look as follows: `<some-path>/python<version>/site-packages/pyspark/__init__.py`.<br />
 Navigate to `<some-path>/python<version>/site-packages/pyspark`. There should be a `jars` folder at this location, inside which the aforementioned jar file should be copied into.
