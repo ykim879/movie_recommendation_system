@@ -6,11 +6,15 @@
 Download: <https://conda.io/projects/conda/en/latest/user-guide/install/index.html> <br />
 Make sure a Python 3.6+ installation is being used <br />
 
-Create a new Conda environment: `conda create --name movie --file requirements.txt` <br />
+Create a new Conda environment named `movie`: `conda create --name movie` <br />
 
 Activate the environment: `conda activate movie` <br />
 
-Install redis for python: `conda install -c anaconda redis`
+Install Redis for python: `conda install -c anaconda redis` <br />
+
+Install Pyspark for python: `conda install pyspark` <br />
+
+Install Flask: `conda install flask` <br />
 
 <h2>Download 25M MovieLense Dataset</h2>
 Download: https://grouplens.org/datasets/movielens/25m/ <br />
