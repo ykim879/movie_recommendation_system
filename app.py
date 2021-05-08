@@ -207,10 +207,10 @@ if __name__ == '__main__':
     #global moviedf
     moviedf = read_moviedf.sort("title")
     datasets_path = os.path.join('..','movie_recommendation_system', 'datasets')
-    complete_ratings_file = os.path.join(datasets_path, 'ml-latest', 'ratings.csv')
-    movies_file = os.path.join(datasets_path, 'ml-latest', 'movies.csv')
+    complete_ratings_file = os.path.join(datasets_path, 'ml-25m', 'ratings.csv')
+    #movies_file = os.path.join(datasets_path, 'ml-25m', 'movies.csv')
 
-    movie = spark.read.option("inferSchema", "true").option("header", "true").csv(movies_file)
+    #movie = spark.read.option("inferSchema", "true").option("header", "true").csv(movies_file)
     
     ratingschema = StructType()\
         .add("userId", IntegerType(), True)\
