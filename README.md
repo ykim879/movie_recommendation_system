@@ -10,7 +10,7 @@ Create a new Conda environment named `movie`: `conda create --name movie python=
 
 Activate the environment: `conda activate movie` <br />
 
-Install Redis for python: `conda install -c anaconda redis` <br />
+Install Redis for python: `pip install redis` <br />
 
 Install Pyspark for python: `conda install pyspark` <br />
 
