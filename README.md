@@ -1,7 +1,7 @@
 <h1>Movie Recommendation System</h1>
 
 <h2>A Unix/Linux Environment is necessary</h2>
-
+After clone this respository, delete two folders: apache-maven-3.6.3 and redis-5.0.12
 <h1>Data Preparation and Setup</h1>
 
 <h2>Create Conda Environment</h2>
