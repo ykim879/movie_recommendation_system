@@ -11,11 +11,8 @@ r = redis.Redis(host='localhost', port=6379, db=0)
 r.flushall()
 
 def init_spark_context():
-    MAX_MEMORY = "5g" #May need to change based on hardware configuration
     conf = SparkConf().setAll([("spark.app.name", "Spark_Processor"), ("spark.redis.port", "6379"), 
-                                      ("spark.jars", "spark-redis-branch-2.4/target/spark-redis_2.11-2.5.0-SNAPSHOT-jar-with-dependencies.jar"), 
-                                      ("spark.executor.memory", MAX_MEMORY), ("spark.driver.memory", MAX_MEMORY), 
-                                      ("spark.memory.fraction", "0.6")])
+                                      ("spark.jars", "spark-redis-branch-2.4/target/spark-redis_2.11-2.5.0-SNAPSHOT-jar-with-dependencies.jar")])
     sc = SparkContext(conf=conf)
     return sc
 
@@ -23,8 +20,8 @@ sc = init_spark_context()
 spark = SparkSession.builder.config(conf = sc.getConf()).getOrCreate()
 
 datasets_path = os.path.join('..','movie_recommendation_system', 'datasets')
-complete_ratings_file = os.path.join(datasets_path, 'ml-latest', 'ratings.csv')
-movies_file = os.path.join(datasets_path, 'ml-latest', 'movies.csv')
+complete_ratings_file = os.path.join(datasets_path, 'ml-25m', 'ratings.csv')
+movies_file = os.path.join(datasets_path, 'ml-25m', 'movies.csv')
 
 ratingschema = StructType()\
     .add("userId", IntegerType(), True)\
