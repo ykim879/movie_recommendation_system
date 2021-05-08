@@ -6,7 +6,7 @@
 Download: <https://conda.io/projects/conda/en/latest/user-guide/install/index.html> <br />
 Make sure a Python 3.6+ installation is being used <br />
 
-Create a new Conda environment named `movie`: `conda create --name movie` <br />
+Create a new Conda environment named `movie`: `conda create --name movie python=3.6` <br />
 
 Activate the environment: `conda activate movie` <br />
 
